@@ -3,6 +3,21 @@
 {% include "navbar.html" %}
 <section class="hero is-primary is-bold is-large">
   <div class="hero-body"></div>
+  <form action="/predict" method="POST">
+    <p>
+        <label for="home">Home</label>
+        <input id="home" name="home" type="text">
+    </p>
+    <p>
+        <label for="away">away</label>
+        <input id="away" name="away" type="text">
+    </p>
+    <input type="submit" value="Predict">
+    <p>
+      <li> {{ text }} </li>
+    </p>
+  </form>
+
 </section>
 {% endblock %}
 {% block scripts %}

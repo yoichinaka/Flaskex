@@ -7,6 +7,7 @@ from flask import Flask, redirect, url_for, render_template, request, session
 import json
 import sys
 import os
+from predict import *
 
 app = Flask(__name__)
 app.secret_key = os.urandom(12)  # Generic key for dev purposes only
@@ -33,8 +34,36 @@ def login():
             return json.dumps({'status': 'Both fields required'})
         return render_template('login.html', form=form)
     user = helpers.get_user()
-    return render_template('home.html', user=user)
 
+    return render_template('home.html')
+
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
+    error = ""
+    if request.method == 'POST':
+        # Form being submitted; grab data from form.
+        home = request.form['home']
+        away = request.form['away']
+        print(home, away)
+        # Validate form data
+        if len(home) == 0 or len(away) == 0:
+            # Form data failed validation; try again
+            error = "Please supply both home and away name"
+        else:
+
+            #  !!!!!! make prediction
+            print(predict1(home, away))
+            result = predict1(home,away)
+
+            return render_template('home.html', text=result +' win')
+            #return redirect(url_for('result', text = home))
+    # Render the sign-up page
+    return render_template('home.html', text=error)
+
+
+
+
+    #return render_template('home.html')
 
 @app.route("/logout")
 def logout():
