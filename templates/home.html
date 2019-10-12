@@ -3,7 +3,7 @@
 {% include "navbar.html" %}
 <section class="hero is-primary is-bold is-large">
   <div class="hero-body"></div>
-  <form action="/predict" method="POST">
+  <form action="/predict" method="POST" id="predict">
     <p>
         <label for="home">Home</label>
         <input id="home" name="home" type="text">
@@ -15,8 +15,8 @@
     <input type="submit" value="Predict">
     <p>
       <li> {{ text }} </li>
-    </p>
-  </form>
+    </p
+
 
 </section>
 {% endblock %}
