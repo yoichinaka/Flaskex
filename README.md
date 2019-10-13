@@ -13,7 +13,12 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/anfederico/Flaskex/master/media/flaskex-demo.png" width="100%"><p>
 
+<p align="center"><img src="https://github.com/yoichinaka/Soccer-predict/pic.jpg" width="100%"><p>
+
 ## Features
+- Based on FlaskEX
+- New! Stripe integrated
+- New! Soccer winner prediction
 - Encrypted user authorizaton
 - Database initialization
 - New user signup
@@ -25,11 +30,16 @@
 - Easily customizable
 
 ## Setup
-``` 
-git clone https://github.com/anfederico/Flaskex
-cd Flaskex
-pip install -r requirements.txt
-python app.py
+```
+For local
+  git clone https://github.com/anfederico/Flaskex
+  cd Flaskex
+  pip install -r requirements.txt
+  python app.py
+
+For render.com
+  Build command   pip install -r requirements.txt
+  Start command   gunicorn app:app
 ```
 
 ## Contributing
