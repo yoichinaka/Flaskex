@@ -8,6 +8,52 @@ import json
 import sys
 import os
 from predict import *
+import stripe
+
+stripe.api_key = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
+product = stripe.Product.create(
+  name='My SaaS Platform',
+  type='service',
+)
+print(product['id'])
+plan = stripe.Plan.create(
+  product=product['id'],
+  nickname='SaaS Platform USD',
+  interval='month',
+  currency='usd',
+  amount=10000,
+)
+print(plan)
+plan_id = plan['id']
+customer = stripe.Customer.create(
+  email='jenny.rosen@example.com'
+)
+print(customer)
+
+stripe_token = stripe.Token.create(
+  card={
+    'number': '4242424242424242',
+    'exp_month': 12,
+    'exp_year': 2020,
+    'cvc': '123',
+  },
+)
+print(stripe_token)
+
+stripe.Charge.create(
+  amount=2000,
+  currency="usd",
+  source=stripe_token, # obtained with Stripe.js
+  description="Charge for jenny.rosen@example.com"
+)
+
+# subscription = stripe.Subscription.create(
+#   customer=customer['id'],
+#   items=[{'plan': 'plan_CBXbz9i7AIOTzr'}],
+# )
+
+
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(12)  # Generic key for dev purposes only
@@ -34,10 +80,34 @@ def login():
             return json.dumps({'status': 'Both fields required'})
         return render_template('login.html', form=form)
     user = helpers.get_user()
-
+    print(user)
     return render_template('home.html')
 
-@app.route('/predict', methods=['GET', 'POST'])
+#-----------------------------------------------------
+@app.route('/charge', methods=['GET', 'POST'])
+def charge():
+    # customer = stripe.Customer.create(
+    #         email="gg@gg.com",
+    #         source=request.json['token'])
+
+    checkout_session = stripe.checkout.Session.create(
+                success_url="http://www.google.com",
+                cancel_url="http://www.yahoo.com",
+                payment_method_types=["card"],
+                subscription_data={"items": [{"plan": plan_id}]}
+
+            )
+    print(checkout_session)
+    #subscription_data={"items": [{"plan": plan_id}]},
+    # stripe.Charge.create(
+    #          customer=customer.id,
+    #          #amount=request.json['amount'],
+    #          currency='usd',
+    #          description=request.json['description'])
+    return render_template('charge.html')
+#------------------------------------------------------
+
+@app.route("/predict0", methods=['GET', 'POST'])
 def predict():
     error = ""
     if request.method == 'POST':
@@ -55,16 +125,12 @@ def predict():
             print(predict1(home, away))
             result = predict1(home,away)
 
-            return render_template('home.html', text=result +' win')
+            return render_template('predict0.html', text=result +' win')
             #return redirect(url_for('result', text = home))
     # Render the sign-up page
-    return render_template('home.html', text=error)
-
-
-
-
+    return render_template('predict0.html', text=error)
+#----------------------------------------------------------
     #return render_template('home.html')
-
 @app.route("/logout")
 def logout():
     session['logged_in'] = False

@@ -3,20 +3,22 @@
 {% include "navbar.html" %}
 <section class="hero is-primary is-bold is-large">
   <div class="hero-body"></div>
-  <form action="/predict" method="POST" id="predict">
-    <p>
-        <label for="home">Home</label>
-        <input id="home" name="home" type="text">
-    </p>
-    <p>
-        <label for="away">away</label>
-        <input id="away" name="away" type="text">
-    </p>
-    <input type="submit" value="Predict">
-    <p>
-      <li> {{ text }} </li>
-    </p
 
+  <script src="https://js.stripe.com/v3/"></script>
+  <form action="/charge" method="post">
+    <article>
+      <label>
+        <span>Amount is $5.00</span>
+      </label>
+    </article>
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="pk_test_TYooMQauvdEDq54NiTphI7jx"
+          data-description="Soccer predciton Charge"
+          data-amount="500"
+          data-email="ko@gg.com"
+          data-locale="auto"></script>
+
+  </form>
 
 </section>
 {% endblock %}

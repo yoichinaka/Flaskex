@@ -69,4 +69,3 @@ $("#navbar-burger-id").click(function () {
     $("#navbar-menu-id").addClass("is-active");
   }
 });
-var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
