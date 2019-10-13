@@ -25,34 +25,6 @@ plan = stripe.Plan.create(
 )
 print(plan)
 plan_id = plan['id']
-customer = stripe.Customer.create(
-  email='jenny.rosen@example.com'
-)
-print(customer)
-
-stripe_token = stripe.Token.create(
-  card={
-    'number': '4242424242424242',
-    'exp_month': 12,
-    'exp_year': 2020,
-    'cvc': '123',
-  },
-)
-print(stripe_token)
-
-stripe.Charge.create(
-  amount=2000,
-  currency="usd",
-  source=stripe_token, # obtained with Stripe.js
-  description="Charge for jenny.rosen@example.com"
-)
-
-# subscription = stripe.Subscription.create(
-#   customer=customer['id'],
-#   items=[{'plan': 'plan_CBXbz9i7AIOTzr'}],
-# )
-
-
 
 
 app = Flask(__name__)
@@ -80,7 +52,7 @@ def login():
             return json.dumps({'status': 'Both fields required'})
         return render_template('login.html', form=form)
     user = helpers.get_user()
-    print(user)
+    print('&&&&&&&&&&&&&&&&&&&&',user)
     return render_template('home.html')
 
 #-----------------------------------------------------
@@ -91,19 +63,14 @@ def charge():
     #         source=request.json['token'])
 
     checkout_session = stripe.checkout.Session.create(
-                success_url="http://www.google.com",
-                cancel_url="http://www.yahoo.com",
+                success_url="http://www.google.com", ##unknown
+                cancel_url="http://www.yahoo.com", ##unknown
                 payment_method_types=["card"],
                 subscription_data={"items": [{"plan": plan_id}]}
 
             )
     print(checkout_session)
-    #subscription_data={"items": [{"plan": plan_id}]},
-    # stripe.Charge.create(
-    #          customer=customer.id,
-    #          #amount=request.json['amount'],
-    #          currency='usd',
-    #          description=request.json['description'])
+
     return render_template('charge.html')
 #------------------------------------------------------
 
