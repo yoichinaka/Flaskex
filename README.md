@@ -13,7 +13,7 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/anfederico/Flaskex/master/media/flaskex-demo.png" width="100%"><p>
 
-<p align="center"><img src="https://github.com/yoichinaka/Soccer-predict/pic.jpg" width="100%"><p>
+<p align="center"><img src="pic.jpg" width="100%"><p>
 
 ## Features
 - Based on FlaskEX
